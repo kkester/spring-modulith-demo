@@ -1,12 +1,12 @@
 package io.spring.modulith.student.api;
 
-import io.spring.modulith.course.CourseModelPort;
+import io.spring.modulith.course.ManageCoursesUseCase;
 import io.spring.modulith.course.CourseRecord;
 import io.spring.modulith.student.StudentCoursesRecord;
-import io.spring.modulith.student.StudentModelPort;
+import io.spring.modulith.student.ManageStudentsUseCase;
 import io.spring.modulith.student.StudentRecord;
-import io.spring.modulith.student.service.Student;
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,27 +14,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PrimaryAdapter
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
 public class StudentController {
 
-    private final StudentModelPort studentModelPort;
-    private final CourseModelPort courseModelPort;
-    private final StudentMapper studentMapper;
+    private final ManageStudentsUseCase manageStudentsUseCase;
+    private final ManageCoursesUseCase manageCoursesUseCase;
 
     @GetMapping
     public List<StudentRecord> getAllStudents() {
-        return studentModelPort.getAllStudents().stream()
-            .map(studentMapper::getRecordFromModel)
-            .toList();
+        return manageStudentsUseCase.getAllStudents();
     }
 
     @GetMapping("/{id}")
     public StudentCoursesRecord getStudentById(@PathVariable Long id) {
-        Student student = studentModelPort.getStudentById(id);
-        List<CourseRecord> courses = courseModelPort.getCourseByStudentId(id);
-        return new StudentCoursesRecord(student.getId(), student.getName(), courses);
+        StudentRecord student = manageStudentsUseCase.getStudentById(id);
+        List<CourseRecord> courses = manageCoursesUseCase.getCourseByStudentId(id);
+        return new StudentCoursesRecord(student.id(), student.name(), courses);
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
@@ -42,9 +40,7 @@ public class StudentController {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("name is blank!");
         }
-        List<StudentRecord> students = studentModelPort.createStudentWithName(name).stream()
-            .map(studentMapper::getRecordFromModel)
-            .toList();
+        List<StudentRecord> students = manageStudentsUseCase.createStudentWithName(name);
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(students);

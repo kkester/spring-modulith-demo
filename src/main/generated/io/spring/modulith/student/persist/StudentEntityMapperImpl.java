@@ -1,6 +1,5 @@
 package io.spring.modulith.student.persist;
 
-import io.spring.modulith.student.service.Student;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 

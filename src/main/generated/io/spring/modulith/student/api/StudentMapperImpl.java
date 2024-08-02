@@ -1,7 +1,7 @@
 package io.spring.modulith.student.api;
 
 import io.spring.modulith.student.StudentRecord;
-import io.spring.modulith.student.service.Student;
+
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 

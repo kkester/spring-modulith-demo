@@ -25,7 +25,7 @@ repositories {
 
 ext {
 	set('springModulithVersion', "1.2.1")
-	set('jmolecules.version', "2023.1.4")
+	set('jmoleculesVersion', "2023.1.4")
 }
 
 dependencies {
@@ -34,8 +34,8 @@ dependencies {
 	implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-//	implementation 'org.jmolecules:jmolecules-ddd:1.9.0'
-//	implementation 'org.jmolecules:jmolecules-hexagonal-architecture:1.9.0'
+	implementation 'org.jmolecules:jmolecules-ddd'
+	implementation 'org.jmolecules:jmolecules-hexagonal-architecture'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
@@ -48,8 +48,8 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
-//	testImplementation 'org.jmolecules.integrations:jmolecules-archunit:0.21.0'
-//	testImplementation 'org.jmolecules.integrations:jmolecules-starter-test:0.21.0'
+	testImplementation 'org.jmolecules.integrations:jmolecules-archunit'
+	testImplementation 'org.jmolecules.integrations:jmolecules-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testRuntimeOnly 'com.h2database:h2'
 }
@@ -57,7 +57,7 @@ dependencies {
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
-//		mavenBom "org.jmolecules:jmolecules-bom:${jmolecules.version}"
+		mavenBom "org.jmolecules:jmolecules-bom:${jmoleculesVersion}"
 	}
 }
 

@@ -1,28 +1,31 @@
 package io.spring.modulith.student.service;
 
-import io.spring.modulith.student.StudentModelPort;
+import io.spring.modulith.student.ManageStudentsUseCase;
+import io.spring.modulith.student.StudentRecord;
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Application
 @Service
 @RequiredArgsConstructor
-public class StudentService implements StudentModelPort {
+public class StudentService implements ManageStudentsUseCase {
 
     private final StudentPersistPort studentPersistPort;
 
-    public Student getStudentById(Long id) {
+    public StudentRecord getStudentById(Long id) {
         return studentPersistPort.getStudent(id)
             .orElseThrow(StudentNotFoundException::new);
     }
 
-    public List<Student> getAllStudents() {
+    public List<StudentRecord> getAllStudents() {
         return studentPersistPort.retrieveAll();
     }
 
-    public List<Student> createStudentWithName(String name) {
-        Student student = Student.builder().name(name).build();
+    public List<StudentRecord> createStudentWithName(String name) {
+        StudentRecord student = new StudentRecord(null, name);
         studentPersistPort.saveStudent(student);
         return studentPersistPort.retrieveAll();
     }

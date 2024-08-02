@@ -3,11 +3,13 @@ package io.spring.modulith.course.persist;
 import io.spring.modulith.course.CourseRecord;
 import io.spring.modulith.course.service.CoursePersistPort;
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@SecondaryAdapter
 @Component
 @RequiredArgsConstructor
 public class CoursePersistenceAdapter implements CoursePersistPort {

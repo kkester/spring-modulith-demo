@@ -1,15 +1,17 @@
 package io.spring.modulith.course.service;
 
-import io.spring.modulith.course.CourseModelPort;
+import io.spring.modulith.course.ManageCoursesUseCase;
 import io.spring.modulith.course.CourseRecord;
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Application
 @Service
 @RequiredArgsConstructor
-public class CourseService implements CourseModelPort {
+public class CourseService implements ManageCoursesUseCase {
 
     private final CoursePersistPort coursePersistPort;
 

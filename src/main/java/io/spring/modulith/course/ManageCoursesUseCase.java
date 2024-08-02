@@ -1,8 +1,11 @@
 package io.spring.modulith.course;
 
+import org.jmolecules.architecture.hexagonal.PrimaryPort;
+
 import java.util.List;
 
-public interface CourseModelPort {
+@PrimaryPort
+public interface ManageCoursesUseCase {
     List<CourseRecord> getAllCourses();
     CourseRecord getCourseById(Long id);
     List<CourseRecord> createCourseFrom(CourseRecord course);
