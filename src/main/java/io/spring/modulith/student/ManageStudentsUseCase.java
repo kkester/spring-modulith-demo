@@ -1,6 +1,5 @@
 package io.spring.modulith.student;
 
-import io.spring.modulith.course.CourseRecord;
 import org.jmolecules.architecture.hexagonal.PrimaryPort;
 
 import java.util.List;
@@ -11,5 +10,5 @@ public interface ManageStudentsUseCase {
     StudentCoursesRecord getStudentById(Long id);
     List<StudentRecord> createStudentWithName(String name);
     StudentCoursesRecord assignStudentToCourse(Long studentId, Long courseId);
-    void selectStudentsForCourse(CourseRecord courseRecord);
+    void selectStudentsForCourse(Long courseId);
 }

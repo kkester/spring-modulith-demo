@@ -46,10 +46,10 @@ public class StudentService implements ManageStudentsUseCase {
     }
 
     @Override
-    public void selectStudentsForCourse(CourseRecord courseRecord) {
+    public void selectStudentsForCourse(Long courseId) {
         Random random = new Random();
         studentPersistPort.retrieveAll().stream()
             .filter(studentRecord -> random.nextInt(100) > 60)
-            .forEach(studentRecord -> manageCoursesUseCase.assignStudentToCourse(courseRecord.id(), studentRecord.id()));
+            .forEach(studentRecord -> manageCoursesUseCase.assignStudentToCourse(courseId, studentRecord.id()));
     }
 }
