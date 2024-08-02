@@ -1,0 +1,10 @@
+spring:
+  application.name: modulith
+  sql:
+    init:
+      mode: always
+      platform: all
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5433}/${POSTGRES_DB:mydatabase}
+    username: ${POSTGRES_USERNAME:myuser}
+    password: ${POSTGRES_PASSWORD:secret}
