@@ -16,6 +16,6 @@ public class CourseCreateEventListener {
 
     @EventListener
     public void handle(CourseCreatedEvent event) {
-        manageStudentsUseCase.selectStudentsForCourse(event.getCourseRecord());
+        manageStudentsUseCase.selectStudentsForCourse(event.getCourseRecordId());
     }
 }
