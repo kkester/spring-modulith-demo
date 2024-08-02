@@ -1,43 +1,47 @@
 package io.spring.modulith.course.persist;
 
-import io.spring.modulith.course.service.Course;
+import io.spring.modulith.course.CourseRecord;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-02T09:01:04-0500",
+    date = "2024-08-02T09:29:53-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component
 public class CourseEntityMapperImpl implements CourseEntityMapper {
 
     @Override
-    public Course getModelFromEntity(CourseEntity courseEntity) {
+    public CourseRecord getModelFromEntity(CourseEntity courseEntity) {
         if ( courseEntity == null ) {
             return null;
         }
 
-        Course.CourseBuilder course = Course.builder();
+        Long id = null;
+        String name = null;
+        Integer level = null;
 
-        course.id( courseEntity.getId() );
-        course.name( courseEntity.getName() );
-        course.level( courseEntity.getLevel() );
+        id = courseEntity.getId();
+        name = courseEntity.getName();
+        level = courseEntity.getLevel();
 
-        return course.build();
+        CourseRecord courseRecord = new CourseRecord( id, name, level );
+
+        return courseRecord;
     }
 
     @Override
-    public CourseEntity getEntityFromModel(Course course) {
+    public CourseEntity getEntityFromModel(CourseRecord course) {
         if ( course == null ) {
             return null;
         }
 
         CourseEntity.CourseEntityBuilder courseEntity = CourseEntity.builder();
 
-        courseEntity.id( course.getId() );
-        courseEntity.name( course.getName() );
-        courseEntity.level( course.getLevel() );
+        courseEntity.id( course.id() );
+        courseEntity.name( course.name() );
+        courseEntity.level( course.level() );
 
         return courseEntity.build();
     }

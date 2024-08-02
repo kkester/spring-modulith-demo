@@ -1,6 +1,10 @@
 package io.spring.modulith.student.api;
 
+import io.spring.modulith.course.CourseModelPort;
+import io.spring.modulith.course.CourseRecord;
+import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentModelPort;
+import io.spring.modulith.student.StudentRecord;
 import io.spring.modulith.student.service.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +20,7 @@ import java.util.List;
 public class StudentController {
 
     private final StudentModelPort studentModelPort;
+    private final CourseModelPort courseModelPort;
     private final StudentMapper studentMapper;
 
     @GetMapping
@@ -26,9 +31,10 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public StudentRecord getStudentById(@PathVariable Long id) {
+    public StudentCoursesRecord getStudentById(@PathVariable Long id) {
         Student student = studentModelPort.getStudentById(id);
-        return new StudentRecord(student.getId(), student.getName());
+        List<CourseRecord> courses = courseModelPort.getCourseByStudentId(id);
+        return new StudentCoursesRecord(student.getId(), student.getName(), courses);
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)

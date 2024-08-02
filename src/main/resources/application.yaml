@@ -1,5 +1,8 @@
 spring:
-  application.name: modulith
+  application:
+    name: modulith
+  jpa:
+    show-sql: true
   sql:
     init:
       mode: always
@@ -8,3 +11,6 @@ spring:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5433}/${POSTGRES_DB:mydatabase}
     username: ${POSTGRES_USERNAME:myuser}
     password: ${POSTGRES_PASSWORD:secret}
+  threads:
+    virtual:
+      enabled: true

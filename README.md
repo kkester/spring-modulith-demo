@@ -1,6 +1,15 @@
 # Spring Modulith Demo
 
-### Reference Documentation
+## Overview
+
+This PoC demonstrates the following architecture, design, and coding strategies:
+
+1. Hexagonal Architecture leveraging Spring Modulith.
+2. Architecture validation using Spring Modulith testing framework.
+3. Custom native queries leveraging JPA SQL projections.
+4. Project leverages spring starter docker and spring dev tools.
+
+## Reference Documentation
 For further reference, please consider the following sections:
 
 * [Official Gradle documentation](https://docs.gradle.org)
@@ -11,17 +20,17 @@ For further reference, please consider the following sections:
 * [Docker Compose Support](https://docs.spring.io/spring-boot/docs/3.3.2/reference/htmlsingle/index.html#features.docker-compose)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/3.3.2/reference/htmlsingle/index.html#using.devtools)
 
-### Guides
+## Guides
 The following guides illustrate how to use some features concretely:
 
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 
-### Additional Links
+## Additional Links
 These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
-### Docker Compose support
+## Docker Compose support
 This project contains a Docker Compose file named `compose.yaml`.
 In this file, the following services have been defined:
 

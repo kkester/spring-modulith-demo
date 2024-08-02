@@ -1,7 +1,7 @@
 package io.spring.modulith.course.service;
 
 import io.spring.modulith.course.CourseModelPort;
-import io.spring.modulith.course.api.CourseRecord;
+import io.spring.modulith.course.CourseRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +14,24 @@ public class CourseService implements CourseModelPort {
     private final CoursePersistPort coursePersistPort;
 
     @Override
-    public List<Course> getAllCourses() {
+    public List<CourseRecord> getAllCourses() {
         return coursePersistPort.retrieveAll();
     }
 
     @Override
-    public Course getCourseById(Long id) {
+    public CourseRecord getCourseById(Long id) {
         return coursePersistPort.getCourse(id)
             .orElseThrow(CourseNotFoundException::new);
     }
 
     @Override
-    public List<Course> createCourseFrom(Course course) {
+    public List<CourseRecord> createCourseFrom(CourseRecord course) {
         coursePersistPort.saveCourse(course);
         return coursePersistPort.retrieveAll();
     }
 
     @Override
-    public List<Course> getCourseByStudentId(Long studentId) {
-        return null;
+    public List<CourseRecord> getCourseByStudentId(Long studentId) {
+        return coursePersistPort.getCourseByStudentId(studentId);
     }
 }

@@ -1,7 +1,7 @@
 package io.spring.modulith.course.api;
 
 import io.spring.modulith.course.CourseModelPort;
-import io.spring.modulith.course.service.Course;
+import io.spring.modulith.course.CourseRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,26 +15,20 @@ import java.util.List;
 public class CourseController {
 
     private final CourseModelPort courseModelPort;
-    private final CourseMapper mapper;
 
     @GetMapping
     public List<CourseRecord> getAllCourses() {
-        return courseModelPort.getAllCourses().stream()
-            .map(mapper::getRecordFromModel)
-            .toList();
+        return courseModelPort.getAllCourses();
     }
 
     @GetMapping("/{id}")
     public CourseRecord getCourseById(@PathVariable Long id) {
-        Course student = courseModelPort.getCourseById(id);
-        return mapper.getRecordFromModel(student);
+        return courseModelPort.getCourseById(id);
     }
 
     @PostMapping
     public ResponseEntity<List<CourseRecord>> addCourse(@RequestBody CourseRecord courseRecord) {
-        List<CourseRecord> students = courseModelPort.createCourseFrom(mapper.getModelFromRecord(courseRecord)).stream()
-            .map(mapper::getRecordFromModel)
-            .toList();
+        List<CourseRecord> students = courseModelPort.createCourseFrom(courseRecord);
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(students);

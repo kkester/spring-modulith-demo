@@ -1,5 +1,6 @@
 package io.spring.modulith.student.api;
 
+import io.spring.modulith.student.StudentRecord;
 import io.spring.modulith.student.service.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
