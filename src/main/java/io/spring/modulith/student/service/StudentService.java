@@ -10,6 +10,7 @@ import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Application
 @Service
@@ -42,5 +43,13 @@ public class StudentService implements ManageStudentsUseCase {
             .orElseThrow(StudentNotFoundException::new);
         List<CourseRecord> courses = manageCoursesUseCase.assignStudentToCourse(courseId, studentId);
         return new StudentCoursesRecord(studentRecord.id(), studentRecord.name(), courses);
+    }
+
+    @Override
+    public void selectStudentsForCourse(CourseRecord courseRecord) {
+        Random random = new Random();
+        studentPersistPort.retrieveAll().stream()
+            .filter(studentRecord -> random.nextInt(100) > 60)
+            .forEach(studentRecord -> manageCoursesUseCase.assignStudentToCourse(courseRecord.id(), studentRecord.id()));
     }
 }
