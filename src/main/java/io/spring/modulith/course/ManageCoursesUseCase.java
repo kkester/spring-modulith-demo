@@ -10,4 +10,5 @@ public interface ManageCoursesUseCase {
     CourseRecord getCourseById(Long id);
     List<CourseRecord> createCourseFrom(CourseRecord course);
     List<CourseRecord> getCourseByStudentId(Long studentId);
+    List<CourseRecord> assignStudentToCourse(Long courseId, Long studentId);
 }

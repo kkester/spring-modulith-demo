@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS course
 
 CREATE TABLE IF NOT EXISTS course_student
 (
-    course_id    bigint REFERENCES course(id),
-    student_id    bigint REFERENCES student(id),
-    PRIMARY KEY (course_id,student_id)
+    course_id  bigint REFERENCES course (id),
+    student_id bigint REFERENCES student (id),
+    PRIMARY KEY (course_id, student_id)
 );

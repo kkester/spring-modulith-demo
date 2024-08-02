@@ -7,6 +7,7 @@ import java.util.List;
 @PrimaryPort
 public interface ManageStudentsUseCase {
     List<StudentRecord> getAllStudents();
-    StudentRecord getStudentById(Long id);
+    StudentCoursesRecord getStudentById(Long id);
     List<StudentRecord> createStudentWithName(String name);
+    StudentCoursesRecord assignStudentToCourse(Long studentId, Long courseId);
 }

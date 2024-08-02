@@ -1,7 +1,7 @@
 package io.spring.modulith.course.service;
 
-import io.spring.modulith.course.ManageCoursesUseCase;
 import io.spring.modulith.course.CourseRecord;
+import io.spring.modulith.course.ManageCoursesUseCase;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.stereotype.Service;
@@ -35,5 +35,11 @@ public class CourseService implements ManageCoursesUseCase {
     @Override
     public List<CourseRecord> getCourseByStudentId(Long studentId) {
         return coursePersistPort.getCourseByStudentId(studentId);
+    }
+
+    @Override
+    public List<CourseRecord> assignStudentToCourse(Long courseId, Long studentId) {
+        coursePersistPort.assignStudentToCourse(courseId,studentId);
+        return getCourseByStudentId(studentId);
     }
 }

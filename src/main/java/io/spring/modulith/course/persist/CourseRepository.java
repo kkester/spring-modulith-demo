@@ -9,6 +9,10 @@ import java.util.List;
 
 @Adapter
 public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
-    @Query(value = "SELECT c.* from course c, course_student cs where cs.student_id=?1 and cs.course_id = c.id", nativeQuery = true)
+    @Query(value = """
+        SELECT new io.spring.modulith.course.CourseRecord(c.id, c.name, c.level) 
+        from course c, course_student cs 
+        where cs.studentId=?1 and cs.courseId = c.id
+        """)
     List<CourseRecord> findAllByStudentId(Long studentId);
 }

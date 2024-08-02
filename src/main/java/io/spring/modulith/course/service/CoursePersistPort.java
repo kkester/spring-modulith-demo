@@ -12,4 +12,5 @@ public interface CoursePersistPort {
     Optional<CourseRecord> getCourse(Long id);
     CourseRecord saveCourse(CourseRecord student);
     List<CourseRecord> getCourseByStudentId(Long studentId);
+    void assignStudentToCourse(Long courseId, Long studentId);
 }

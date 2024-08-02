@@ -21,7 +21,6 @@ import java.util.List;
 public class StudentController {
 
     private final ManageStudentsUseCase manageStudentsUseCase;
-    private final ManageCoursesUseCase manageCoursesUseCase;
 
     @GetMapping
     public List<StudentRecord> getAllStudents() {
@@ -30,9 +29,7 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public StudentCoursesRecord getStudentById(@PathVariable Long id) {
-        StudentRecord student = manageStudentsUseCase.getStudentById(id);
-        List<CourseRecord> courses = manageCoursesUseCase.getCourseByStudentId(id);
-        return new StudentCoursesRecord(student.id(), student.name(), courses);
+        return manageStudentsUseCase.getStudentById(id);
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
@@ -44,5 +41,10 @@ public class StudentController {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(students);
+    }
+
+    @PutMapping("/{studentId}/students/{courseId}")
+    public StudentCoursesRecord assignStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
+        return manageStudentsUseCase.assignStudentToCourse(studentId, courseId);
     }
 }

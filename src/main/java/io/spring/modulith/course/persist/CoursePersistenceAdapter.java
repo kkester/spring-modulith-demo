@@ -15,6 +15,7 @@ import java.util.Optional;
 public class CoursePersistenceAdapter implements CoursePersistPort {
 
     private final CourseRepository repository;
+    private final CourseStudentRepository courseStudentRepository;
     private final CourseEntityMapper mapper;
 
     @Override
@@ -40,5 +41,10 @@ public class CoursePersistenceAdapter implements CoursePersistPort {
     @Override
     public List<CourseRecord> getCourseByStudentId(Long studentId) {
         return repository.findAllByStudentId(studentId);
+    }
+
+    @Override
+    public void assignStudentToCourse(Long courseId, Long studentId) {
+        courseStudentRepository.save(new CourseStudentEntity(courseId,studentId));
     }
 }

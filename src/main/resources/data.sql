@@ -1,3 +1,4 @@
+DELETE FROM course_student;
 DELETE FROM student;
 INSERT INTO student (name)
 VALUES ('Bobby Tables'),
