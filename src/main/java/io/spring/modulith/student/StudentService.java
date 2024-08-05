@@ -4,12 +4,14 @@ import io.spring.modulith.course.CourseEntity;
 import io.spring.modulith.course.CourseService;
 import io.spring.modulith.student.persist.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.architecture.layered.ApplicationLayer;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+@ApplicationLayer
 @Service
 @RequiredArgsConstructor
 public class StudentService {

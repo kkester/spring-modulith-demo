@@ -3,6 +3,7 @@ package io.spring.modulith.student.api;
 import io.spring.modulith.student.StudentEntity;
 import io.spring.modulith.student.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.architecture.layered.InterfaceLayer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 
+@InterfaceLayer
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
