@@ -1,10 +1,11 @@
-package io.spring.modulith.course.persist;
+package io.spring.modulith.course;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.jmolecules.architecture.layered.DomainLayer;
 
 @Getter
 @Setter
@@ -12,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "course")
+@DomainLayer
 public class CourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

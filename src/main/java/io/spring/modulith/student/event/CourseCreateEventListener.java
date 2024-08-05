@@ -1,21 +1,19 @@
 package io.spring.modulith.student.event;
 
 import io.spring.modulith.course.CourseCreatedEvent;
-import io.spring.modulith.student.ManageStudentsUseCase;
+import io.spring.modulith.student.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-@PrimaryAdapter
 @Component
 @RequiredArgsConstructor
 public class CourseCreateEventListener {
 
-    private final ManageStudentsUseCase manageStudentsUseCase;
+    private final StudentService studentService;
 
     @EventListener
     public void handle(CourseCreatedEvent event) {
-        manageStudentsUseCase.selectStudentsForCourse(event.getCourseRecordId());
+        studentService.selectStudentsForCourse(event.getCourseRecordId());
     }
 }

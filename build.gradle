@@ -37,7 +37,7 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
 	implementation 'org.jmolecules:jmolecules-ddd'
-	implementation 'org.jmolecules:jmolecules-hexagonal-architecture'
+	implementation 'org.jmolecules:jmolecules-layered-architecture'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'

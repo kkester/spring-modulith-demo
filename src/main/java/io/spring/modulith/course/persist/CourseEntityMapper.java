@@ -1,6 +1,7 @@
 package io.spring.modulith.course.persist;
 
-import io.spring.modulith.course.CourseRecord;
+import io.spring.modulith.course.CourseEntity;
+import io.spring.modulith.course.api.CourseRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

@@ -1,38 +1,42 @@
 package io.spring.modulith.student.api;
 
-import io.spring.modulith.student.ManageStudentsUseCase;
-import io.spring.modulith.student.StudentCoursesRecord;
-import io.spring.modulith.student.StudentRecord;
+import io.spring.modulith.student.StudentEntity;
+import io.spring.modulith.student.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
-@PrimaryAdapter
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
 public class StudentController {
 
-    private final ManageStudentsUseCase manageStudentsUseCase;
+    private final StudentService studentService;
+    private final StudentEntityMapper mapper;
 
     @GetMapping
     public List<StudentRecord> getAllStudents() {
-        return manageStudentsUseCase.getAllStudents();
+        return studentService.getAllStudents().stream()
+            .map(mapper::getModelFromEntity)
+            .toList();
     }
 
     @GetMapping("/{id}")
     public StudentCoursesRecord getStudentById(@PathVariable Long id) {
-        return manageStudentsUseCase.getStudentById(id);
+        StudentEntity studentEntity = studentService.getStudentById(id);
+        return new StudentCoursesRecord(studentEntity.getId(), studentEntity.getName(), Collections.emptyList());
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<List<StudentRecord>> addStudent(@RequestBody String name) {
-        List<StudentRecord> students = manageStudentsUseCase.createStudentWithName(name);
+        List<StudentRecord> students = studentService.createStudentWithName(name).stream()
+            .map(mapper::getModelFromEntity)
+            .toList();
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(students);
@@ -40,6 +44,7 @@ public class StudentController {
 
     @PutMapping("/{studentId}/students/{courseId}")
     public StudentCoursesRecord assignStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
-        return manageStudentsUseCase.assignStudentToCourse(studentId, courseId);
+        StudentEntity studentEntity = studentService.assignStudentToCourse(studentId, courseId);
+        return new StudentCoursesRecord(studentEntity.getId(), studentEntity.getName(), Collections.emptyList());
     }
 }

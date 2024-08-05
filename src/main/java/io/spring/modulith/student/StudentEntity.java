@@ -1,7 +1,10 @@
-package io.spring.modulith.student.persist;
+package io.spring.modulith.student;
 
+import io.spring.modulith.course.CourseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +18,10 @@ public class StudentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @ManyToMany
+    private List<CourseEntity> courses;
+
+    public void addCourse(CourseEntity courseEntity) {
+
+    }
 }
