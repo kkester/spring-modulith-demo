@@ -5,6 +5,7 @@ import io.spring.modulith.course.ManageCoursesUseCase;
 import io.spring.modulith.student.ManageStudentsUseCase;
 import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentRecord;
+import io.spring.modulith.student.api.StudentController;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.stereotype.Service;

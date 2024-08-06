@@ -1,16 +1,17 @@
 package io.spring.modulith;
 
-import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.jmolecules.architecture.hexagonal.PrimaryPort;
 import org.jmolecules.archunit.JMoleculesArchitectureRules;
-import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.modulith.core.ApplicationModules;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 @AnalyzeClasses(packages = "io.spring.modulith")
 class HexagonalTests {
@@ -19,9 +20,8 @@ class HexagonalTests {
 
     ApplicationModules modules = ApplicationModules.of(ModulithApplication.class);
 
-    @Test
-    void ensureModules() {
-        var packages = new ClassFileImporter().importPackages("io.spring.modulith..");
+    @ArchTest
+    void ensureModules(JavaClasses javaClasses) {
         modules.stream().map(applicationModule -> applicationModule.getBasePackage())
             .forEach(javaPackage -> {
                 classes()
@@ -33,7 +33,7 @@ class HexagonalTests {
                     .beRecords()
                     .orShould()
                     .beAssignableTo(ApplicationEvent.class)
-                    .check(packages);
+                    .check(javaClasses);
             });
     }
 }
