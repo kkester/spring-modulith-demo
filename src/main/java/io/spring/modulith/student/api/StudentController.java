@@ -1,7 +1,9 @@
 package io.spring.modulith.student.api;
 
-import io.spring.modulith.student.StudentEntity;
+import io.spring.modulith.student.StudentCoursesRecord;
+import io.spring.modulith.student.StudentRecord;
 import io.spring.modulith.student.StudentService;
+import io.spring.modulith.student.persist.StudentEntity;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.layered.InterfaceLayer;
 import org.springframework.http.HttpStatus;
@@ -19,26 +21,20 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
-    private final StudentEntityMapper mapper;
 
     @GetMapping
     public List<StudentRecord> getAllStudents() {
-        return studentService.getAllStudents().stream()
-            .map(mapper::getModelFromEntity)
-            .toList();
+        return studentService.getAllStudents();
     }
 
     @GetMapping("/{id}")
     public StudentCoursesRecord getStudentById(@PathVariable Long id) {
-        StudentEntity studentEntity = studentService.getStudentById(id);
-        return new StudentCoursesRecord(studentEntity.getId(), studentEntity.getName(), Collections.emptyList());
+        return studentService.getStudentById(id);
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<List<StudentRecord>> addStudent(@RequestBody String name) {
-        List<StudentRecord> students = studentService.createStudentWithName(name).stream()
-            .map(mapper::getModelFromEntity)
-            .toList();
+        List<StudentRecord> students = studentService.createStudentWithName(name);
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(students);
@@ -46,7 +42,6 @@ public class StudentController {
 
     @PutMapping("/{studentId}/students/{courseId}")
     public StudentCoursesRecord assignStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
-        StudentEntity studentEntity = studentService.assignStudentToCourse(studentId, courseId);
-        return new StudentCoursesRecord(studentEntity.getId(), studentEntity.getName(), Collections.emptyList());
+        return studentService.assignStudentToCourse(studentId, courseId);
     }
 }

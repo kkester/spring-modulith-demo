@@ -1,4 +1,4 @@
-package io.spring.modulith.student.api;
+package io.spring.modulith.student;
 
 public record CourseRecord(Long id, String name, Integer level) {
     public CourseRecord {

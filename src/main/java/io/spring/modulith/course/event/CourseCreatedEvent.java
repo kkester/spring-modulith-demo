@@ -1,9 +1,8 @@
-package io.spring.modulith.course;
+package io.spring.modulith.course.event;
 
-import org.jmolecules.event.annotation.DomainEvent;
+import io.spring.modulith.course.persist.CourseEntity;
 import org.springframework.context.ApplicationEvent;
 
-@DomainEvent
 public class CourseCreatedEvent extends ApplicationEvent {
 
     private final Long courseId;

@@ -1,7 +1,9 @@
 package io.spring.modulith.student;
 
-import io.spring.modulith.course.CourseEntity;
 import io.spring.modulith.course.CourseService;
+import io.spring.modulith.course.persist.CourseEntity;
+import io.spring.modulith.student.persist.StudentEntity;
+import io.spring.modulith.student.persist.StudentEntityMapper;
 import io.spring.modulith.student.persist.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.layered.ApplicationLayer;
@@ -17,29 +19,33 @@ import java.util.Random;
 public class StudentService {
 
     private final CourseService courseService;
+    private final StudentEntityMapper studentEntityMapper;
     private final StudentRepository studentRepository;
 
-    public StudentEntity getStudentById(Long id) {
+    public StudentCoursesRecord getStudentById(Long id) {
         return studentRepository.findById(id)
+            .map(studentEntity -> new StudentCoursesRecord(studentEntity.getId(), studentEntity.getName(), Collections.emptyList()))
             .orElseThrow(StudentNotFoundException::new);
     }
 
-    public List<StudentEntity> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentRecord> getAllStudents() {
+        return studentRepository.findAll().stream()
+            .map(studentEntityMapper::getModelFromEntity)
+            .toList();
     }
 
-    public List<StudentEntity> createStudentWithName(String name) {
+    public List<StudentRecord> createStudentWithName(String name) {
         StudentEntity studentEntity = new StudentEntity(null, name, Collections.emptyList());
         studentRepository.save(studentEntity);
         return getAllStudents();
     }
 
-    public StudentEntity assignStudentToCourse(Long studentId, Long courseId) {
+    public StudentCoursesRecord assignStudentToCourse(Long studentId, Long courseId) {
         StudentEntity studentEntity = studentRepository.findById(studentId)
             .orElseThrow(StudentNotFoundException::new);
-        CourseEntity courseEntity = courseService.getCourseById(courseId);
-        studentEntity.addCourse(courseEntity);
-        return studentEntity;
+//        CourseEntity courseEntity = courseService.getCourseById(courseId);
+//        studentEntity.addCourse(courseEntity);
+        return new StudentCoursesRecord(studentEntity.getId(), studentEntity.getName(), Collections.emptyList());
     }
 
     public void selectStudentsForCourse(Long courseId) {

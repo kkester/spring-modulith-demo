@@ -1,6 +1,6 @@
-package io.spring.modulith.student;
+package io.spring.modulith.student.persist;
 
-import io.spring.modulith.course.CourseEntity;
+import io.spring.modulith.course.persist.CourseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

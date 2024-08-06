@@ -1,4 +1,4 @@
-package io.spring.modulith.student.api;
+package io.spring.modulith.student;
 
 import java.util.List;
 

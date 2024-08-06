@@ -1,7 +1,7 @@
-package io.spring.modulith.student.api;
+package io.spring.modulith.student.persist;
 
-import io.spring.modulith.student.StudentEntity;
-import io.spring.modulith.student.api.StudentRecord;
+import io.spring.modulith.student.StudentRecord;
+import io.spring.modulith.student.persist.StudentEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
