@@ -2,7 +2,6 @@ package io.spring.modulith.course.api;
 
 import io.spring.modulith.course.CourseRecord;
 import io.spring.modulith.course.CourseService;
-import io.spring.modulith.course.persist.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.layered.InterfaceLayer;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,6 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
-    private final CourseRepository courseRepository;
 
     @GetMapping
     public List<CourseRecord> getAllCourses() {

@@ -24,20 +24,25 @@ public class CourseService {
 
     public List<CourseRecord> getAllCourses() {
         return courseRepository.findAll().stream()
-            .map(courseEntityMapper::getModelFromEntity)
+            .map(courseEntityMapper::courseEntityToCourseRecord)
             .toList();
     }
 
     public CourseRecord getCourseById(Long id) {
         return courseRepository.findById(id)
-            .map(courseEntityMapper::getModelFromEntity)
+            .map(courseEntityMapper::courseEntityToCourseRecord)
             .orElseThrow(CourseNotFoundException::new);
     }
 
     public List<CourseRecord> createCourseFrom(CourseRecord courseRecord) {
-        CourseEntity courseEntity = courseEntityMapper.getEntityFromModel(courseRecord);
+        CourseEntity courseEntity = courseEntityMapper.courseRecordToCourseEntity(courseRecord);
         CourseEntity savedEntity = courseRepository.save(courseEntity);
         applicationEventPublisher.publishEvent(new CourseCreatedEvent(savedEntity));
         return getAllCourses();
+    }
+
+    public CourseEntity getCourseEntityById(Long courseId) {
+        return courseRepository.findById(courseId)
+            .orElseThrow(CourseNotFoundException::new);
     }
 }

@@ -3,7 +3,6 @@ package io.spring.modulith.student.api;
 import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentRecord;
 import io.spring.modulith.student.StudentService;
-import io.spring.modulith.student.persist.StudentEntity;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.layered.InterfaceLayer;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @InterfaceLayer
@@ -28,7 +26,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public StudentCoursesRecord getStudentById(@PathVariable Long id) {
+    public StudentCoursesRecord getStudentById(@PathVariable(value = "id") Long id) {
         return studentService.getStudentById(id);
     }
 
@@ -41,7 +39,7 @@ public class StudentController {
     }
 
     @PutMapping("/{studentId}/students/{courseId}")
-    public StudentCoursesRecord assignStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
+    public StudentCoursesRecord assignStudentToCourse(@PathVariable(value = "studentId") Long studentId, @PathVariable(value = "courseId") Long courseId) {
         return studentService.assignStudentToCourse(studentId, courseId);
     }
 }
