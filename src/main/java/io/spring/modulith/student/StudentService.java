@@ -1,17 +1,16 @@
 package io.spring.modulith.student;
 
-import io.spring.modulith.course.Course;
+import io.spring.modulith.course.CourseEntity;
 import io.spring.modulith.course.CourseService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jmolecules.architecture.onion.classical.DomainServiceRing;
+import org.jmolecules.architecture.onion.simplified.DomainRing;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
 
-@DomainServiceRing
+@DomainRing
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -20,28 +19,27 @@ public class StudentService {
     private final CourseService courseService;
     private final StudentDao studentDao;
 
-    public Student getStudentById(Long id) {
+    public StudentEntity getStudentById(Long id) {
         return studentDao.findById(id)
             .orElseThrow(StudentNotFoundException::new);
     }
 
-    public List<Student> getAllStudents() {
+    public List<StudentEntity> getAllStudents() {
         return studentDao.findAll();
     }
 
-    public List<Student> createStudentWithName(String name) {
-        Student student = studentDao.newStudent();
+    public List<StudentEntity> createStudentWithName(String name) {
+        StudentEntity student = new StudentEntity();
         student.setName(name);
         studentDao.save(student);
         return getAllStudents();
     }
 
-    @Transactional
-    public Student assignStudentToCourse(Long studentId, Long courseId) {
+    public StudentEntity assignStudentToCourse(Long studentId, Long courseId) {
         log.info("Assigning course {} to student {}", courseId, studentId);
-        Student student = studentDao.findById(studentId)
+        StudentEntity student = studentDao.findById(studentId)
             .orElseThrow(StudentNotFoundException::new);
-        Course course = courseService.getCourseById(courseId);
+        CourseEntity course = courseService.getCourseEntityById(courseId);
         student.addCourse(course);
         return studentDao.save(student);
     }

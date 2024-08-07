@@ -1,13 +1,12 @@
-package io.spring.modulith.course.persist;
+package io.spring.modulith.course;
 
-import io.spring.modulith.course.Course;
-import io.spring.modulith.student.persist.StudentEntity;
+import io.spring.modulith.student.StudentEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jmolecules.architecture.onion.classical.InfrastructureRing;
+import org.jmolecules.architecture.onion.simplified.DomainRing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "course")
-@InfrastructureRing
-public class CourseEntity implements Course {
+@DomainRing
+public class CourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

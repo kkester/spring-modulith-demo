@@ -1,26 +1,31 @@
 package io.spring.modulith.course.persist;
 
-import io.spring.modulith.course.Course;
 import io.spring.modulith.course.CourseDao;
-import org.jmolecules.architecture.onion.classical.InfrastructureRing;
+import io.spring.modulith.course.CourseEntity;
+import lombok.RequiredArgsConstructor;
+import org.jmolecules.architecture.onion.simplified.InfrastructureRing;
 
 import java.util.List;
 import java.util.Optional;
 
 @InfrastructureRing
+@RequiredArgsConstructor
 public class CourseDaoImpl implements CourseDao {
+
+    private final CourseRepository courseRepository;
+
     @Override
-    public List<Course> findAllCourses() {
-        return null;
+    public List<CourseEntity> findAllCourses() {
+        return courseRepository.findAll();
     }
 
     @Override
-    public Optional<Course> findCourseById(Long id) {
-        return Optional.empty();
+    public Optional<CourseEntity> findCourseById(Long id) {
+        return courseRepository.findById(id);
     }
 
     @Override
-    public CourseEntity save(Course courseRecord) {
-        return null;
+    public CourseEntity save(CourseEntity course) {
+        return courseRepository.save(course);
     }
 }

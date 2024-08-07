@@ -1,6 +1,7 @@
 package io.spring.modulith.course.persist;
 
-import org.jmolecules.architecture.onion.classical.InfrastructureRing;
+import io.spring.modulith.course.CourseEntity;
+import org.jmolecules.architecture.onion.simplified.InfrastructureRing;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @InfrastructureRing

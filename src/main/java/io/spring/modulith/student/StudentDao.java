@@ -1,14 +1,13 @@
 package io.spring.modulith.student;
 
-import org.jmolecules.architecture.onion.classical.DomainModelRing;
+import org.jmolecules.architecture.onion.simplified.DomainRing;
 
 import java.util.List;
 import java.util.Optional;
 
-@DomainModelRing
+@DomainRing
 public interface StudentDao {
-    Optional<Student> findById(Long id);
-    List<Student> findAll();
-    Student save(Student studentRecord);
-    Student newStudent();
+    Optional<StudentEntity> findById(Long id);
+    List<StudentEntity> findAll();
+    StudentEntity save(StudentEntity studentRecord);
 }
