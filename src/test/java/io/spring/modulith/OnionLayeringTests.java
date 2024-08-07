@@ -82,7 +82,7 @@ class OnionLayeringTests {
         @Override
         public boolean test(JavaClass javaClass) {
             return !javaClass.getPackage().getName().contains("modulith") ||
-                javaClass.getPackage().getName().endsWith(moduleName+".api") ||
+                javaClass.getPackage().getName().contains(moduleName+".api") ||
                 (javaClass.isAnnotatedWith(Service.class) && javaClass.getPackage().getName().endsWith(moduleName)) ||
                 (javaClass.isAnnotatedWith(Entity.class) && javaClass.getPackage().getName().endsWith(moduleName));
         }

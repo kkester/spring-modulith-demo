@@ -1,8 +1,9 @@
-package io.spring.modulith.student.api;
+package io.spring.modulith.student.api.mapper;
 
 import io.spring.modulith.course.CourseEntity;
 import io.spring.modulith.course.api.CourseDto;
 import io.spring.modulith.student.StudentEntity;
+import io.spring.modulith.student.api.StudentCoursesDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,25 +11,25 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-07T13:07:35-0500",
+    date = "2024-08-07T13:30:52-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component
-public class StudentDtoMapperImpl implements StudentDtoMapper {
+public class StudentCoursesDtoMapperImpl implements StudentCoursesDtoMapper {
 
     @Override
-    public StudentDto studentEntityToStudentDto(StudentEntity studentEntity) {
+    public StudentCoursesDto studentEntityToStudentDto(StudentEntity studentEntity) {
         if ( studentEntity == null ) {
             return null;
         }
 
-        StudentDto studentDto = new StudentDto();
+        StudentCoursesDto studentCoursesDto = new StudentCoursesDto();
 
-        studentDto.setId( studentEntity.getId() );
-        studentDto.setName( studentEntity.getName() );
-        studentDto.setCourses( courseEntityListToCourseDtoList( studentEntity.getCourses() ) );
+        studentCoursesDto.setId( studentEntity.getId() );
+        studentCoursesDto.setName( studentEntity.getName() );
+        studentCoursesDto.setCourses( courseEntityListToCourseDtoList( studentEntity.getCourses() ) );
 
-        return studentDto;
+        return studentCoursesDto;
     }
 
     protected CourseDto courseEntityToCourseDto(CourseEntity courseEntity) {

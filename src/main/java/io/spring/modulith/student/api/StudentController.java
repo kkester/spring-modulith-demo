@@ -2,6 +2,8 @@ package io.spring.modulith.student.api;
 
 import io.spring.modulith.student.StudentEntity;
 import io.spring.modulith.student.StudentService;
+import io.spring.modulith.student.api.mapper.StudentCoursesDtoMapper;
+import io.spring.modulith.student.api.mapper.StudentDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.onion.simplified.ApplicationRing;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ public class StudentController {
 
     private final StudentService studentService;
     private final StudentDtoMapper studentDtoMapper;
+    private final StudentCoursesDtoMapper studentCoursesDtoMapper;
 
     @GetMapping
     public List<StudentDto> getAllStudents() {
@@ -28,8 +31,8 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public StudentDto getStudentById(@PathVariable(value = "id") Long id) {
-        return studentDtoMapper.studentEntityToStudentDto(studentService.getStudentById(id));
+    public StudentCoursesDto getStudentById(@PathVariable(value = "id") Long id) {
+        return studentCoursesDtoMapper.studentEntityToStudentDto(studentService.getStudentById(id));
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
@@ -43,8 +46,8 @@ public class StudentController {
     }
 
     @PutMapping("/{studentId}/students/{courseId}")
-    public StudentDto assignStudentToCourse(@PathVariable(value = "studentId") Long studentId, @PathVariable(value = "courseId") Long courseId) {
+    public StudentCoursesDto assignStudentToCourse(@PathVariable(value = "studentId") Long studentId, @PathVariable(value = "courseId") Long courseId) {
         StudentEntity studentEntity = studentService.assignStudentToCourse(studentId, courseId);
-        return studentDtoMapper.studentEntityToStudentDto(studentEntity);
+        return studentCoursesDtoMapper.studentEntityToStudentDto(studentEntity);
     }
 }

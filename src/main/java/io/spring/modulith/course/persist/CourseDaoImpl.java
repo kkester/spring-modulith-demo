@@ -4,11 +4,13 @@ import io.spring.modulith.course.CourseDao;
 import io.spring.modulith.course.CourseEntity;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.onion.simplified.InfrastructureRing;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @InfrastructureRing
+@Component
 @RequiredArgsConstructor
 public class CourseDaoImpl implements CourseDao {
 
