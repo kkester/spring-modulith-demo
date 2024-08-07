@@ -2,47 +2,35 @@ package io.spring.modulith.course;
 
 import io.spring.modulith.course.event.CourseCreatedEvent;
 import io.spring.modulith.course.persist.CourseEntity;
-import io.spring.modulith.course.persist.CourseEntityMapper;
-import io.spring.modulith.course.persist.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jmolecules.architecture.layered.ApplicationLayer;
+import org.jmolecules.architecture.onion.classical.DomainServiceRing;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@ApplicationLayer
+@DomainServiceRing
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class CourseService {
 
-    private final CourseRepository courseRepository;
+    private final CourseDao courseDao;
     private final ApplicationEventPublisher applicationEventPublisher;
-    private final CourseEntityMapper courseEntityMapper;
 
-    public List<CourseRecord> getAllCourses() {
-        return courseRepository.findAll().stream()
-            .map(courseEntityMapper::courseEntityToCourseRecord)
-            .toList();
+    public List<Course> getAllCourses() {
+        return courseDao.findAllCourses();
     }
 
-    public CourseRecord getCourseById(Long id) {
-        return courseRepository.findById(id)
-            .map(courseEntityMapper::courseEntityToCourseRecord)
+    public Course getCourseById(Long id) {
+        return courseDao.findCourseById(id)
             .orElseThrow(CourseNotFoundException::new);
     }
 
-    public List<CourseRecord> createCourseFrom(CourseRecord courseRecord) {
-        CourseEntity courseEntity = courseEntityMapper.courseRecordToCourseEntity(courseRecord);
-        CourseEntity savedEntity = courseRepository.save(courseEntity);
-        applicationEventPublisher.publishEvent(new CourseCreatedEvent(savedEntity));
+    public List<Course> createCourseFrom(Course course) {
+        Course savedCourse = courseDao.save(course);
+        applicationEventPublisher.publishEvent(new CourseCreatedEvent(savedCourse));
         return getAllCourses();
-    }
-
-    public CourseEntity getCourseEntityById(Long courseId) {
-        return courseRepository.findById(courseId)
-            .orElseThrow(CourseNotFoundException::new);
     }
 }

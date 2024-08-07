@@ -1,62 +1,54 @@
 package io.spring.modulith.student;
 
+import io.spring.modulith.course.Course;
 import io.spring.modulith.course.CourseService;
-import io.spring.modulith.course.persist.CourseEntity;
-import io.spring.modulith.student.persist.StudentEntity;
-import io.spring.modulith.student.persist.StudentEntityMapper;
-import io.spring.modulith.student.persist.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jmolecules.architecture.layered.ApplicationLayer;
+import org.jmolecules.architecture.onion.classical.DomainServiceRing;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-@ApplicationLayer
+@DomainServiceRing
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class StudentService {
 
     private final CourseService courseService;
-    private final StudentEntityMapper studentEntityMapper;
-    private final StudentRepository studentRepository;
+    private final StudentDao studentDao;
 
-    public StudentCoursesRecord getStudentById(Long id) {
-        return studentRepository.findById(id)
-            .map(studentEntityMapper::studentEntityToStudentCoursesRecord)
+    public Student getStudentById(Long id) {
+        return studentDao.findById(id)
             .orElseThrow(StudentNotFoundException::new);
     }
 
-    public List<StudentRecord> getAllStudents() {
-        return studentRepository.findAll().stream()
-            .map(studentEntityMapper::getRecordFromEntity)
-            .toList();
+    public List<Student> getAllStudents() {
+        return studentDao.findAll();
     }
 
-    public List<StudentRecord> createStudentWithName(String name) {
-        StudentEntity studentEntity = new StudentEntity(null, name, Collections.emptyList());
-        studentRepository.save(studentEntity);
+    public List<Student> createStudentWithName(String name) {
+        Student student = studentDao.newStudent();
+        student.setName(name);
+        studentDao.save(student);
         return getAllStudents();
     }
 
     @Transactional
-    public StudentCoursesRecord assignStudentToCourse(Long studentId, Long courseId) {
+    public Student assignStudentToCourse(Long studentId, Long courseId) {
         log.info("Assigning course {} to student {}", courseId, studentId);
-        StudentEntity studentEntity = studentRepository.findById(studentId)
+        Student student = studentDao.findById(studentId)
             .orElseThrow(StudentNotFoundException::new);
-        CourseEntity courseEntity = courseService.getCourseEntityById(courseId);
-        studentEntity.addCourse(courseEntity);
-        studentRepository.save(studentEntity);
-        return studentEntityMapper.studentEntityToStudentCoursesRecord(studentEntity);
+        Course course = courseService.getCourseById(courseId);
+        student.addCourse(course);
+        return studentDao.save(student);
     }
 
     public void selectStudentsForCourse(Long courseId) {
         Random random = new Random();
-        studentRepository.findAll().stream()
+        studentDao.findAll().stream()
             .filter(student -> random.nextInt(100) > 60)
             .forEach(student -> assignStudentToCourse(student.getId(), courseId));
     }

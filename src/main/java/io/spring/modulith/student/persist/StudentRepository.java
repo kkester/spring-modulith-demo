@@ -1,8 +1,8 @@
 package io.spring.modulith.student.persist;
 
-import org.jmolecules.architecture.layered.InfrastructureLayer;
+import org.jmolecules.architecture.onion.classical.InfrastructureRing;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-@InfrastructureLayer
+@InfrastructureRing
 public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 }

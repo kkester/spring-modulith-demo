@@ -1,12 +1,13 @@
 package io.spring.modulith.course.persist;
 
+import io.spring.modulith.course.Course;
 import io.spring.modulith.student.persist.StudentEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jmolecules.architecture.layered.InfrastructureLayer;
+import org.jmolecules.architecture.onion.classical.InfrastructureRing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "course")
-@InfrastructureLayer
-public class CourseEntity {
+@InfrastructureRing
+public class CourseEntity implements Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +29,4 @@ public class CourseEntity {
         joinColumns = @JoinColumn(name = "course_id"),
         inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<StudentEntity> students = new ArrayList<>();
-
-    public void addStudent(StudentEntity studentEntity) {
-        students.add(studentEntity);
-        studentEntity.getCourses().add(this);
-    }
 }
