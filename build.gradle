@@ -38,6 +38,8 @@ dependencies {
 
 	implementation 'org.jmolecules:jmolecules-ddd'
 	implementation 'org.jmolecules:jmolecules-hexagonal-architecture'
+	implementation 'org.jmolecules:jmolecules-layered-architecture'
+	implementation 'org.jmolecules:jmolecules-onion-architecture'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'

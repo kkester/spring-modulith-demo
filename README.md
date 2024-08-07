@@ -5,11 +5,22 @@
 This PoC demonstrates the following architecture, design, and coding strategies:
 
 1. Hexagonal Architecture leveraging Spring Modulith.
-1. Architecture validation using Spring Modulith and `ArchUnit` testing frameworks.
+1. Architecture validation using Spring Modulith, `jmolecules` and `ArchUnit` testing frameworks.
 1. Custom native queries leveraging JPA SQL projections.
 1. PostGRES database with H2 embedded database for tests.
 1. Define mappers utilizing `MapStructs`
 1. Project leverages spring starter docker and spring dev tools.
+
+## Spring Modulith Summary
+
+Spring Modulith is a framework that will inspect the application's package structure and identify top level packages as modules.  In the case of this project, two modules are identified called course and student.  Any classes in the root module package will be considered public.  Any classes in sub-packages will be considered private.  As a result, classes with the annotation `PrimaryPort` should be the main type of classes that reside in the module's root package.
+
+One aspect to look out for when implementing applications with spring modulith is that the framework does not allow circular dependencies between modules.  One technique to use to work around this is to introduce a common module where classes needed by multiple modules can reside.
+
+## Architecture Variations
+* See the `layered` branch for an example of using [Layered Architecture](https://ddd-practitioners.com/home/glossary/layered-architecture/).
+* See the `onion` and `onion-classic` branches for examples using the [Onion Architecture](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/)
+See also [DDD](https://thedomaindrivendesign.io/) and [Anemic Model](https://thedomaindrivendesign.io/anemic-model/).
 
 ## Reference Documentation
 For further reference, please consider the following sections:
