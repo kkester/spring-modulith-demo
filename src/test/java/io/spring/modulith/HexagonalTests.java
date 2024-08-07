@@ -22,7 +22,9 @@ class HexagonalTests {
 
     @ArchTest
     void ensureModules(JavaClasses javaClasses) {
-        modules.stream().map(applicationModule -> applicationModule.getBasePackage())
+        modules.stream()
+            .map(applicationModule -> applicationModule.getBasePackage())
+            .filter(javaPackage -> !javaPackage.getName().endsWith("entity"))
             .forEach(javaPackage -> {
                 classes()
                     .that()

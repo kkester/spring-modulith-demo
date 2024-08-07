@@ -24,7 +24,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public CourseRecord getCourseById(@PathVariable Long id) {
+    public CourseRecord getCourseById(@PathVariable("id") Long id) {
         return manageCoursesUseCase.getCourseById(id);
     }
 

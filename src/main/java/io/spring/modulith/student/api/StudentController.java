@@ -26,7 +26,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public StudentCoursesRecord getStudentById(@PathVariable Long id) {
+    public StudentCoursesRecord getStudentById(@PathVariable("id") Long id) {
         return manageStudentsUseCase.getStudentById(id);
     }
 
@@ -39,7 +39,7 @@ public class StudentController {
     }
 
     @PutMapping("/{studentId}/students/{courseId}")
-    public StudentCoursesRecord assignStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
+    public StudentCoursesRecord assignStudentToCourse(@PathVariable("studentId") Long studentId, @PathVariable("courseId") Long courseId) {
         return manageStudentsUseCase.assignStudentToCourse(studentId, courseId);
     }
 }

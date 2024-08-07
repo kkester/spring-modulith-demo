@@ -2,6 +2,10 @@ package io.spring.modulith.course.persist;
 
 import io.spring.modulith.course.CourseRecord;
 import io.spring.modulith.course.service.CoursePersistPort;
+import io.spring.modulith.entity.CourseEntity;
+import io.spring.modulith.entity.CourseRepository;
+import io.spring.modulith.entity.StudentEntity;
+import io.spring.modulith.entity.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
 import org.springframework.stereotype.Component;
@@ -14,37 +18,43 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CoursePersistenceAdapter implements CoursePersistPort {
 
-    private final CourseRepository repository;
-    private final CourseStudentRepository courseStudentRepository;
+    private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
     private final CourseEntityMapper mapper;
 
     @Override
     public List<CourseRecord> retrieveAll() {
-        return repository.findAll().stream()
-            .map(mapper::getModelFromEntity)
+        return courseRepository.findAll().stream()
+            .map(mapper::courseEntityToCourseRecord)
             .toList();
     }
 
     @Override
     public Optional<CourseRecord> getCourse(Long id) {
-        return repository.findById(id)
-            .map(mapper::getModelFromEntity);
+        return courseRepository.findById(id)
+            .map(mapper::courseEntityToCourseRecord);
     }
 
     @Override
     public CourseRecord saveCourse(CourseRecord course) {
-        CourseEntity courseEntity = mapper.getEntityFromModel(course);
-        CourseEntity savedEntity = repository.save(courseEntity);
-        return mapper.getModelFromEntity(savedEntity);
+        CourseEntity courseEntity = mapper.courseRecordToCourseEntity(course);
+        CourseEntity savedEntity = courseRepository.save(courseEntity);
+        return mapper.courseEntityToCourseRecord(savedEntity);
     }
 
     @Override
     public List<CourseRecord> getCourseByStudentId(Long studentId) {
-        return repository.findAllByStudentId(studentId);
+        StudentEntity studentEntity = studentRepository.findById(studentId).orElseThrow();
+        return studentEntity.getCourses().stream()
+            .map(mapper::courseEntityToCourseRecord)
+            .toList();
     }
 
     @Override
     public void assignStudentToCourse(Long courseId, Long studentId) {
-        courseStudentRepository.save(new CourseStudentEntity(courseId,studentId));
+        CourseEntity courseEntity = courseRepository.findById(courseId).orElseThrow();
+        StudentEntity studentEntity = studentRepository.findById(studentId).orElseThrow();
+        courseEntity.addStudent(studentEntity);
+        studentRepository.save(studentEntity);
     }
 }

@@ -1,41 +1,101 @@
 package io.spring.modulith.student.persist;
 
+import io.spring.modulith.course.CourseRecord;
+import io.spring.modulith.entity.CourseEntity;
+import io.spring.modulith.entity.StudentEntity;
+import io.spring.modulith.student.StudentCoursesRecord;
+import io.spring.modulith.student.StudentRecord;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-02T09:01:04-0500",
+    date = "2024-08-07T15:34:25-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component
 public class StudentEntityMapperImpl implements StudentEntityMapper {
 
     @Override
-    public Student getModelFromEntity(StudentEntity studentEntity) {
+    public StudentRecord studentRecordToStudentEntity(StudentEntity studentEntity) {
         if ( studentEntity == null ) {
             return null;
         }
 
-        Student.StudentBuilder student = Student.builder();
+        Long id = null;
+        String name = null;
 
-        student.id( studentEntity.getId() );
-        student.name( studentEntity.getName() );
+        id = studentEntity.getId();
+        name = studentEntity.getName();
 
-        return student.build();
+        StudentRecord studentRecord = new StudentRecord( id, name );
+
+        return studentRecord;
     }
 
     @Override
-    public StudentEntity getEntityFromModel(Student student) {
+    public StudentCoursesRecord studentCoursesRecordToStudentEntity(StudentEntity studentEntity) {
+        if ( studentEntity == null ) {
+            return null;
+        }
+
+        Long id = null;
+        String name = null;
+        List<CourseRecord> courses = null;
+
+        id = studentEntity.getId();
+        name = studentEntity.getName();
+        courses = courseEntityListToCourseRecordList( studentEntity.getCourses() );
+
+        StudentCoursesRecord studentCoursesRecord = new StudentCoursesRecord( id, name, courses );
+
+        return studentCoursesRecord;
+    }
+
+    @Override
+    public StudentEntity studentEntityToStudentRecord(StudentRecord student) {
         if ( student == null ) {
             return null;
         }
 
-        StudentEntity.StudentEntityBuilder studentEntity = StudentEntity.builder();
+        StudentEntity studentEntity = new StudentEntity();
 
-        studentEntity.id( student.getId() );
-        studentEntity.name( student.getName() );
+        studentEntity.setId( student.id() );
+        studentEntity.setName( student.name() );
 
-        return studentEntity.build();
+        return studentEntity;
+    }
+
+    protected CourseRecord courseEntityToCourseRecord(CourseEntity courseEntity) {
+        if ( courseEntity == null ) {
+            return null;
+        }
+
+        Long id = null;
+        String name = null;
+        Integer level = null;
+
+        id = courseEntity.getId();
+        name = courseEntity.getName();
+        level = courseEntity.getLevel();
+
+        CourseRecord courseRecord = new CourseRecord( id, name, level );
+
+        return courseRecord;
+    }
+
+    protected List<CourseRecord> courseEntityListToCourseRecordList(List<CourseEntity> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<CourseRecord> list1 = new ArrayList<CourseRecord>( list.size() );
+        for ( CourseEntity courseEntity : list ) {
+            list1.add( courseEntityToCourseRecord( courseEntity ) );
+        }
+
+        return list1;
     }
 }
