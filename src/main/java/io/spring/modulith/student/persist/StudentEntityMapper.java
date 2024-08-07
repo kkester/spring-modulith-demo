@@ -1,6 +1,6 @@
 package io.spring.modulith.student.persist;
 
-import io.spring.modulith.entity.StudentEntity;
+import io.spring.modulith.entity.student.StudentEntity;
 import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentRecord;
 import org.mapstruct.Mapper;

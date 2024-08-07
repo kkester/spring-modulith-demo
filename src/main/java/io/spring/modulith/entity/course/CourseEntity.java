@@ -1,5 +1,6 @@
-package io.spring.modulith.entity;
+package io.spring.modulith.entity.course;
 
+import io.spring.modulith.entity.student.StudentEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

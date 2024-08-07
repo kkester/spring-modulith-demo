@@ -1,8 +1,8 @@
 package io.spring.modulith.student.persist;
 
 import io.spring.modulith.course.CourseRecord;
-import io.spring.modulith.entity.CourseEntity;
-import io.spring.modulith.entity.StudentEntity;
+import io.spring.modulith.entity.course.CourseEntity;
+import io.spring.modulith.entity.student.StudentEntity;
 import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentRecord;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-07T15:34:25-0500",
+    date = "2024-08-07T15:47:47-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component

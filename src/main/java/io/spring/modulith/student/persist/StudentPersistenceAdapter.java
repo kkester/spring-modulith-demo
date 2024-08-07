@@ -1,7 +1,7 @@
 package io.spring.modulith.student.persist;
 
-import io.spring.modulith.entity.StudentEntity;
-import io.spring.modulith.entity.StudentRepository;
+import io.spring.modulith.entity.student.StudentEntity;
+import io.spring.modulith.entity.student.StudentRepository;
 import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentRecord;
 import io.spring.modulith.student.service.StudentPersistPort;

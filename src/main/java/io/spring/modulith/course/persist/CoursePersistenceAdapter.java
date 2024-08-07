@@ -2,10 +2,10 @@ package io.spring.modulith.course.persist;
 
 import io.spring.modulith.course.CourseRecord;
 import io.spring.modulith.course.service.CoursePersistPort;
-import io.spring.modulith.entity.CourseEntity;
-import io.spring.modulith.entity.CourseRepository;
-import io.spring.modulith.entity.StudentEntity;
-import io.spring.modulith.entity.StudentRepository;
+import io.spring.modulith.entity.course.CourseEntity;
+import io.spring.modulith.entity.course.CourseRepository;
+import io.spring.modulith.entity.student.StudentEntity;
+import io.spring.modulith.entity.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
 import org.springframework.stereotype.Component;
