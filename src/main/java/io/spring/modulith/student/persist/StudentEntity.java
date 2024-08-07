@@ -2,6 +2,7 @@ package io.spring.modulith.student.persist;
 
 import io.spring.modulith.course.Course;
 import io.spring.modulith.course.persist.CourseEntity;
+import io.spring.modulith.student.AddCourseToStudentAction;
 import io.spring.modulith.student.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.List;
 @Entity
 @Table(name = "student")
 @InfrastructureRing
-public class StudentEntity implements Student {
+public class StudentEntity implements Student, AddCourseToStudentAction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -29,7 +29,10 @@ public class CourseService {
     }
 
     public List<Course> createCourseFrom(Course course) {
-        Course savedCourse = courseDao.save(course);
+        Course newCourse = courseDao.newCourse();
+        newCourse.setName(course.getName());
+        newCourse.setLevel(course.getLevel());
+        Course savedCourse = courseDao.save(newCourse);
         applicationEventPublisher.publishEvent(new CourseCreatedEvent(savedCourse));
         return getAllCourses();
     }

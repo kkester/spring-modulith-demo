@@ -19,20 +19,24 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public List<Course> getAllCourses() {
-        return courseService.getAllCourses();
+    public List<CourseDto> getAllCourses() {
+        return courseService.getAllCourses().stream()
+            .map(CourseDto.class::cast)
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable Long id) {
-        return courseService.getCourseById(id);
+    public CourseDto getCourseById(@PathVariable Long id) {
+        return (CourseDto)courseService.getCourseById(id);
     }
 
     @PostMapping
-    public ResponseEntity<List<Course>> addCourse(@RequestBody Course courseRecord) {
-        List<Course> students = courseService.createCourseFrom(courseRecord);
+    public ResponseEntity<List<CourseDto>> addCourse(@RequestBody CourseDto courseRecord) {
+        List<CourseDto> courses = courseService.createCourseFrom(courseRecord).stream()
+            .map(CourseDto.class::cast)
+            .toList();
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(students);
+            .body(courses);
     }
 }

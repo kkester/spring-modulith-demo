@@ -20,25 +20,29 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public List<StudentDto> getAllStudents() {
+        return studentService.getAllStudents().stream()
+            .map(StudentDto.class::cast)
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable(value = "id") Long id) {
-        return studentService.getStudentById(id);
+    public StudentDto getStudentById(@PathVariable(value = "id") Long id) {
+        return (StudentDto) studentService.getStudentById(id);
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<List<Student>> addStudent(@RequestBody String name) {
-        List<Student> students = studentService.createStudentWithName(name);
+    public ResponseEntity<List<StudentDto>> addStudent(@RequestBody String name) {
+        List<StudentDto> students = studentService.createStudentWithName(name).stream()
+            .map(StudentDto.class::cast)
+            .toList();
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(students);
     }
 
     @PutMapping("/{studentId}/students/{courseId}")
-    public Student assignStudentToCourse(@PathVariable(value = "studentId") Long studentId, @PathVariable(value = "courseId") Long courseId) {
-        return studentService.assignStudentToCourse(studentId, courseId);
+    public StudentDto assignStudentToCourse(@PathVariable(value = "studentId") Long studentId, @PathVariable(value = "courseId") Long courseId) {
+        return (StudentDto) studentService.assignStudentToCourse(studentId, courseId);
     }
 }

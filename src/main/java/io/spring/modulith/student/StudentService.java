@@ -39,11 +39,12 @@ public class StudentService {
     @Transactional
     public Student assignStudentToCourse(Long studentId, Long courseId) {
         log.info("Assigning course {} to student {}", courseId, studentId);
-        Student student = studentDao.findById(studentId)
+        AddCourseToStudentAction student = studentDao.findById(studentId)
+            .map(AddCourseToStudentAction.class::cast)
             .orElseThrow(StudentNotFoundException::new);
         Course course = courseService.getCourseById(courseId);
         student.addCourse(course);
-        return studentDao.save(student);
+        return studentDao.save((Student) student);
     }
 
     public void selectStudentsForCourse(Long courseId) {
