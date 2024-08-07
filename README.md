@@ -5,7 +5,7 @@
 This PoC demonstrates the following architecture, design, and coding strategies:
 
 1. Hexagonal Architecture leveraging Spring Modulith.
-1. Architecture validation using Spring Modulith and `ArchUnit` testing frameworks.
+1. Architecture validation using Spring Modulith, `jmolecules` and `ArchUnit` testing frameworks.
 1. Custom native queries leveraging JPA SQL projections.
 1. PostGRES database with H2 embedded database for tests.
 1. Define mappers utilizing `MapStructs`

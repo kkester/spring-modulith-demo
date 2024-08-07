@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jmolecules.architecture.onion.classical.InfrastructureRing;
 import org.jmolecules.architecture.onion.simplified.DomainRing;
 
 import java.util.ArrayList;
@@ -30,11 +29,6 @@ public class StudentEntity {
 
     public void addCourse(CourseEntity courseEntity) {
         courses.add(courseEntity);
-        List<StudentEntity> students = courseEntity.getStudents();
-        if (students == null) {
-            students = new ArrayList<>();
-            courseEntity.setStudents(students);
-        }
-        students.add(this);
+        courseEntity.getStudents().add(this);
     }
 }
