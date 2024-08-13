@@ -5,7 +5,6 @@ import io.spring.modulith.course.ManageCoursesUseCase;
 import io.spring.modulith.student.ManageStudentsUseCase;
 import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentRecord;
-import io.spring.modulith.student.api.StudentController;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import java.util.Random;
 public class StudentService implements ManageStudentsUseCase {
 
     private final StudentPersistPort studentPersistPort;
+    private final StudentNotificationPort studentNotificationPort;
     private final ManageCoursesUseCase manageCoursesUseCase;
 
     public StudentCoursesRecord getStudentById(Long id) {
@@ -34,7 +34,8 @@ public class StudentService implements ManageStudentsUseCase {
 
     public List<StudentRecord> createStudentWithName(String name) {
         StudentRecord student = new StudentRecord(null, name);
-        studentPersistPort.saveStudent(student);
+        StudentRecord savedStudentRecord = studentPersistPort.saveStudent(student);
+        studentNotificationPort.notifyStudentCreated(savedStudentRecord);
         return studentPersistPort.retrieveAll();
     }
 

@@ -1,6 +1,6 @@
 package io.spring.modulith.student.event;
 
-import io.spring.modulith.course.CourseCreatedEvent;
+import io.spring.modulith.common.CourseCreatedEvent;
 import io.spring.modulith.student.ManageStudentsUseCase;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
@@ -16,6 +16,6 @@ public class CourseCreateEventListener {
 
     @EventListener
     public void handle(CourseCreatedEvent event) {
-        manageStudentsUseCase.selectStudentsForCourse(event.getCourseRecordId());
+        manageStudentsUseCase.selectStudentsForCourse(event.getCourseId());
     }
 }

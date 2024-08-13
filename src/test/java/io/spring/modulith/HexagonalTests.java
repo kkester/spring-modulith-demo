@@ -4,7 +4,7 @@ import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
-import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
+import org.jmolecules.architecture.hexagonal.Application;
 import org.jmolecules.architecture.hexagonal.PrimaryPort;
 import org.jmolecules.archunit.JMoleculesArchitectureRules;
 import org.springframework.context.ApplicationEvent;
@@ -35,5 +35,27 @@ class HexagonalTests {
                     .beAssignableTo(ApplicationEvent.class)
                     .check(javaClasses);
             });
+    }
+
+    @ArchTest
+    void ensureEvents(JavaClasses javaClasses) {
+        noClasses()
+            .that()
+            .areAnnotatedWith(Application.class)
+            .should()
+            .dependOnClassesThat()
+            .areAssignableTo(ApplicationEvent.class)
+            .check(javaClasses);
+    }
+
+    @ArchTest
+    void ensurePersists(JavaClasses javaClasses) {
+        noClasses()
+            .that()
+            .resideInAPackage("..persist")
+            .should()
+            .dependOnClassesThat()
+            .areAssignableTo(ApplicationEvent.class)
+            .check(javaClasses);
     }
 }
