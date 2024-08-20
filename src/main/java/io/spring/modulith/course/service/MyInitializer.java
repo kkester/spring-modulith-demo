@@ -1,4 +1,4 @@
-package io.spring.modulith.course;
+package io.spring.modulith.course.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.modulith.ApplicationModuleInitializer;

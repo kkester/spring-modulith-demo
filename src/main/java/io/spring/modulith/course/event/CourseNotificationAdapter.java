@@ -6,7 +6,7 @@ import io.spring.modulith.course.service.CourseNotificationPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
-import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.stereotype.Component;
 
 @SecondaryAdapter
@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CourseNotificationAdapter implements CourseNotificationPort {
 
-    private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventMulticaster eventMulticaster;
 
     @Override
     public void notifyCourseCreated(CourseRecord courseRecord) {
         log.info("Publishing Event for New Course Record {}", courseRecord);
-        eventPublisher.publishEvent(new CourseCreatedEvent(courseRecord.id()));
+        eventMulticaster.multicastEvent(new CourseCreatedEvent(courseRecord.id()));
     }
 }
