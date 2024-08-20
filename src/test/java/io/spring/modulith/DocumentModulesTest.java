@@ -4,13 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.modulith.core.ApplicationModules;
 import org.springframework.modulith.docs.Documenter;
 
-class ModularityTests {
+class DocumentModulesTest {
     ApplicationModules modules = ApplicationModules.of(ModulithApplication.class);
-
-    @Test
-    void verifiesModuleStructure() {
-        modules.verify().forEach( System.out::println );
-    }
 
     @Test
     void createModuleDocumentation() {

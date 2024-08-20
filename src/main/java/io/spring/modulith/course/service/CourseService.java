@@ -34,6 +34,7 @@ public class CourseService implements ManageCoursesUseCase {
     @Transactional
     @Override
     public List<CourseRecord> createCourseFrom(CourseRecord course) {
+        log.info("Saving New Course Record {}", course);
         CourseRecord savedCourse = coursePersistPort.saveCourse(course);
         courseNotificationPort.notifyCourseCreated(savedCourse);
         return coursePersistPort.retrieveAll();

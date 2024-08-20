@@ -3,6 +3,7 @@ package io.spring.modulith.course.api;
 import io.spring.modulith.course.ManageCoursesUseCase;
 import io.spring.modulith.course.CourseRecord;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
+@Slf4j
 public class CourseController {
 
     private final ManageCoursesUseCase manageCoursesUseCase;
@@ -30,6 +32,7 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<List<CourseRecord>> addCourse(@RequestBody CourseRecord courseRecord) {
+        log.info("Received New Course Record {}", courseRecord);
         List<CourseRecord> students = manageCoursesUseCase.createCourseFrom(courseRecord);
         return ResponseEntity
             .status(HttpStatus.CREATED)
