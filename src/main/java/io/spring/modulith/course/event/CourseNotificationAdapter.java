@@ -3,10 +3,11 @@ package io.spring.modulith.course.event;
 import io.spring.modulith.common.CourseCreatedEvent;
 import io.spring.modulith.course.CourseRecord;
 import io.spring.modulith.course.service.CourseNotificationPort;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
-import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @SecondaryAdapter
@@ -15,11 +16,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CourseNotificationAdapter implements CourseNotificationPort {
 
-    private final ApplicationEventMulticaster eventMulticaster;
+    private final ApplicationEventPublisher eventPublisher;
 
+    @Transactional
     @Override
     public void notifyCourseCreated(CourseRecord courseRecord) {
         log.info("Publishing Event for New Course Record {}", courseRecord);
-        eventMulticaster.multicastEvent(new CourseCreatedEvent(courseRecord.id()));
+        eventPublisher.publishEvent(new CourseCreatedEvent(courseRecord.id()));
     }
 }
