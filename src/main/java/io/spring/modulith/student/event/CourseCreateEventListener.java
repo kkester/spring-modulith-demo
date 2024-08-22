@@ -4,7 +4,7 @@ import io.spring.modulith.common.CourseCreatedEvent;
 import io.spring.modulith.student.ManageStudentsUseCase;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
-import org.springframework.context.event.EventListener;
+import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
 @PrimaryAdapter
@@ -14,7 +14,7 @@ public class CourseCreateEventListener {
 
     private final ManageStudentsUseCase manageStudentsUseCase;
 
-    @EventListener
+    @ApplicationModuleListener
     public void handle(CourseCreatedEvent event) {
         manageStudentsUseCase.selectStudentsForCourse(event.getCourseId());
     }

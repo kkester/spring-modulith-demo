@@ -7,6 +7,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import org.jmolecules.architecture.hexagonal.Application;
 import org.jmolecules.architecture.hexagonal.PrimaryPort;
 import org.jmolecules.archunit.JMoleculesArchitectureRules;
+import org.jmolecules.event.annotation.DomainEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.modulith.core.ApplicationModules;
 
@@ -32,7 +33,7 @@ class HexagonalTests {
                     .orShould()
                     .beRecords()
                     .orShould()
-                    .beAssignableTo(ApplicationEvent.class)
+                    .beAnnotatedWith(DomainEvent.class)
                     .check(javaClasses);
             });
     }

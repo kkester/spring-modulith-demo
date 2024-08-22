@@ -2,6 +2,7 @@ package io.spring.modulith.course.service;
 
 import io.spring.modulith.course.CourseRecord;
 import io.spring.modulith.course.ManageCoursesUseCase;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jmolecules.architecture.hexagonal.Application;
@@ -30,6 +31,7 @@ public class CourseService implements ManageCoursesUseCase {
             .orElseThrow(CourseNotFoundException::new);
     }
 
+    @Transactional
     @Override
     public List<CourseRecord> createCourseFrom(CourseRecord course) {
         CourseRecord savedCourse = coursePersistPort.saveCourse(course);

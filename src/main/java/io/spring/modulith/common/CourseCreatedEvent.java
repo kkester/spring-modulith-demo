@@ -1,13 +1,15 @@
 package io.spring.modulith.common;
 
-import lombok.Getter;
-import org.springframework.context.ApplicationEvent;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.jmolecules.event.annotation.DomainEvent;
 
-@Getter
-public class CourseCreatedEvent extends ApplicationEvent {
-    private final Long courseId;
-    public CourseCreatedEvent(Long courseId) {
-        super(courseId);
-        this.courseId = courseId;
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@DomainEvent
+public class CourseCreatedEvent {
+    private Long courseId;
+    private String name;
 }

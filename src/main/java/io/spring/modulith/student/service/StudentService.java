@@ -6,6 +6,7 @@ import io.spring.modulith.student.ManageStudentsUseCase;
 import io.spring.modulith.student.StudentCoursesRecord;
 import io.spring.modulith.student.StudentRecord;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Random;
 @Application
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StudentService implements ManageStudentsUseCase {
 
     private final StudentPersistPort studentPersistPort;
@@ -49,6 +51,7 @@ public class StudentService implements ManageStudentsUseCase {
 
     @Override
     public void selectStudentsForCourse(Long courseId) {
+        log.info("Selecting Students for New Course {}", courseId);
         Random random = new Random();
         studentPersistPort.retrieveAll().stream()
             .filter(studentRecord -> random.nextInt(100) > 60)
