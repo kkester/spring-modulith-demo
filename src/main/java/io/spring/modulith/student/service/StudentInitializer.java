@@ -23,9 +23,9 @@ public class StudentInitializer implements ApplicationModuleInitializer {
         ApplicationModules.of(ModulithApplication.class).verify();
 
         log.info("Resubmitting Incomplete Events");
-        incompleteEventPublications.resubmitIncompletePublications(ee -> {
-            log.info("Resubmitting event {} in state {}", ee.getIdentifier(), ee.isPublicationCompleted());
-            return !ee.isPublicationCompleted();
+        incompleteEventPublications.resubmitIncompletePublications(eventPublication -> {
+            log.info("Resubmitting event {} in state {}", eventPublication.getIdentifier(), eventPublication.isPublicationCompleted());
+            return !eventPublication.isPublicationCompleted();
         });
     }
 }
