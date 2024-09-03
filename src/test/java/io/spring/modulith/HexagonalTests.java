@@ -9,6 +9,7 @@ import org.jmolecules.architecture.hexagonal.PrimaryPort;
 import org.jmolecules.archunit.JMoleculesArchitectureRules;
 import org.jmolecules.event.annotation.DomainEvent;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.modulith.core.ApplicationModule;
 import org.springframework.modulith.core.ApplicationModules;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -23,7 +24,7 @@ class HexagonalTests {
 
     @ArchTest
     void ensureModules(JavaClasses javaClasses) {
-        modules.stream().map(applicationModule -> applicationModule.getBasePackage())
+        modules.stream().map(ApplicationModule::getBasePackage)
             .forEach(javaPackage -> {
                 classes()
                     .that()

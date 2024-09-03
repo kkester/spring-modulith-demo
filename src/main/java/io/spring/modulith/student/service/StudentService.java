@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 @Application
 @Service
@@ -24,11 +26,13 @@ public class StudentService implements ManageStudentsUseCase {
     private final StudentNotificationPort studentNotificationPort;
     private final ManageCoursesUseCase manageCoursesUseCase;
 
+    @SneakyThrows
     public StudentCoursesRecord getStudentById(Long id) {
+        log.info("Get student by id: {}", id);
         StudentRecord studentRecord = studentPersistPort.getStudent(id)
             .orElseThrow(StudentNotFoundException::new);
-        List<CourseRecord> courses = manageCoursesUseCase.getCourseByStudentId(id);
-        return new StudentCoursesRecord(studentRecord.id(), studentRecord.name(), courses);
+        Future<List<CourseRecord>> courses = manageCoursesUseCase.getCourseByStudentId(id);
+        return new StudentCoursesRecord(studentRecord.id(), studentRecord.name(), courses.get());
     }
 
     public List<StudentRecord> getAllStudents() {
@@ -54,7 +58,7 @@ public class StudentService implements ManageStudentsUseCase {
     @Override
     public void selectStudentsForCourse(Long courseId) {
         log.info("Selecting Students for New Course {}", courseId);
-        Thread.sleep(15000);
+        TimeUnit.MILLISECONDS.sleep(5000);
         Random random = new Random();
         studentPersistPort.retrieveAll().stream()
             .filter(studentRecord -> random.nextInt(100) > 60)

@@ -18,7 +18,7 @@ public class CourseCreateEventListener {
 
     @ApplicationModuleListener
     public void handle(CourseCreatedEvent event) {
-        log.info("Received Event for Course Created {}", event.getCourseId());
+        log.info("Received Event for Course Created {} on VT: {}", event.getCourseId(), Thread.currentThread().isVirtual());
         manageStudentsUseCase.selectStudentsForCourse(event.getCourseId());
     }
 }
