@@ -22,6 +22,6 @@ public class CourseNotificationAdapter implements CourseNotificationPort {
     @Override
     public void notifyCourseCreated(CourseRecord courseRecord) {
         log.info("Publishing Event for New Course Record {}", courseRecord);
-        eventPublisher.publishEvent(new CourseCreatedEvent(courseRecord.id()));
+        eventPublisher.publishEvent(new CourseCreatedEvent(courseRecord.id(), courseRecord.name()));
     }
 }

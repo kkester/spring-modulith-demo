@@ -31,8 +31,8 @@ public class StudentService implements ManageStudentsUseCase {
         log.info("Get student by id: {}", id);
         StudentRecord studentRecord = studentPersistPort.getStudent(id)
             .orElseThrow(StudentNotFoundException::new);
-        Future<List<CourseRecord>> courses = manageCoursesUseCase.getCourseByStudentId(id);
-        return new StudentCoursesRecord(studentRecord.id(), studentRecord.name(), courses.get());
+        Future<List<CourseRecord>> coursesFuture = manageCoursesUseCase.getCourseByStudentId(id);
+        return new StudentCoursesRecord(studentRecord.id(), studentRecord.name(), coursesFuture.get());
     }
 
     public List<StudentRecord> getAllStudents() {

@@ -25,39 +25,39 @@ class HexagonalTests {
     @ArchTest
     void ensureModules(JavaClasses javaClasses) {
         modules.stream().map(ApplicationModule::getBasePackage)
-            .forEach(javaPackage -> {
-                classes()
-                    .that()
-                    .resideInAPackage(javaPackage.getName())
-                    .should()
-                    .beAnnotatedWith(PrimaryPort.class)
-                    .orShould()
-                    .beRecords()
-                    .orShould()
-                    .beAnnotatedWith(DomainEvent.class)
-                    .check(javaClasses);
-            });
+                .forEach(javaPackage -> classes()
+                        .that()
+                        .resideInAPackage(javaPackage.getName())
+                        .should()
+                        .beAnnotatedWith(PrimaryPort.class)
+                        .orShould()
+                        .beRecords()
+                        .orShould()
+                        .beAnnotatedWith(DomainEvent.class)
+                        .orShould()
+                        .bePackagePrivate()
+                        .check(javaClasses));
     }
 
     @ArchTest
     void ensureEvents(JavaClasses javaClasses) {
         noClasses()
-            .that()
-            .areAnnotatedWith(Application.class)
-            .should()
-            .dependOnClassesThat()
-            .areAssignableTo(ApplicationEvent.class)
-            .check(javaClasses);
+                .that()
+                .areAnnotatedWith(Application.class)
+                .should()
+                .dependOnClassesThat()
+                .areAssignableTo(ApplicationEvent.class)
+                .check(javaClasses);
     }
 
     @ArchTest
     void ensurePersists(JavaClasses javaClasses) {
         noClasses()
-            .that()
-            .resideInAPackage("..persist")
-            .should()
-            .dependOnClassesThat()
-            .areAssignableTo(ApplicationEvent.class)
-            .check(javaClasses);
+                .that()
+                .resideInAPackage("..persist")
+                .should()
+                .dependOnClassesThat()
+                .areAssignableTo(ApplicationEvent.class)
+                .check(javaClasses);
     }
 }
